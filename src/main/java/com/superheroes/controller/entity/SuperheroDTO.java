@@ -1,4 +1,4 @@
-package com.superheroes.entity;
+package com.superheroes.controller.entity;
 
 public class SuperheroDTO {
 

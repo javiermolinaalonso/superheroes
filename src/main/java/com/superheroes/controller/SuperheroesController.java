@@ -1,6 +1,6 @@
 package com.superheroes.controller;
 
-import com.superheroes.entity.SuperheroDTO;
+import com.superheroes.controller.entity.SuperheroDTO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
