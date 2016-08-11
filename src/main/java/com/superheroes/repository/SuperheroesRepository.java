@@ -1,14 +1,10 @@
 package com.superheroes.repository;
 
 import com.superheroes.entity.Superhero;
+import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
+public interface SuperheroesRepository extends CrudRepository<Superhero, Long>{
 
-public interface SuperheroesRepository {
+    Superhero findByName(Superhero superhero);
 
-    void save(Superhero superhero);
-
-    Superhero getByName(Superhero superhero);
-
-    List<Superhero> getAll();
 }

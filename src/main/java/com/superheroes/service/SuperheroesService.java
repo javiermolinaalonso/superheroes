@@ -10,4 +10,5 @@ public interface SuperheroesService {
 
     Superhero getByName(String name);
 
+    Superhero create(Superhero superhero);
 }

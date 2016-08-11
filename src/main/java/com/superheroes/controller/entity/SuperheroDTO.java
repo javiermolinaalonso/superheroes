@@ -22,7 +22,7 @@ public class SuperheroDTO {
         return this;
     }
 
-    public String getPseudonim() {
+    public String getPseudonym() {
         return pseudonim;
     }
 
