@@ -6,10 +6,7 @@ import com.superheroes.entity.Superhero;
 import com.superheroes.service.SuperheroesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +23,8 @@ public class SuperheroesController {
         this.superheroConverter = superheroConverter;
     }
 
-    @RequestMapping
+    @RequestMapping(method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
     public List<SuperheroDTO> getSuperHeroes() {
         Iterable<Superhero> superheroes = superheroesService.getAll();
         List<SuperheroDTO> superheroDTOs = new ArrayList<>();
@@ -36,9 +34,9 @@ public class SuperheroesController {
         return superheroDTOs;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public void createSuperhero(SuperheroDTO superheroDTO) {
+    public void createSuperhero(@RequestBody SuperheroDTO superheroDTO) {
         Superhero superhero = superheroConverter.fromDTO(superheroDTO);
         superheroesService.create(superhero);
     }
