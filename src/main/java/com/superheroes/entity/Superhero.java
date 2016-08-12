@@ -1,8 +1,9 @@
 package com.superheroes.entity;
 
 
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.neo4j.graphdb.Direction;
+import org.springframework.data.neo4j.annotation.*;
+import org.springframework.data.neo4j.support.index.IndexType;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,14 +14,14 @@ public class Superhero {
     @GraphId
     private Long id;
 
-//    @Indexed(indexType = IndexType.FULLTEXT)
+    @Indexed(indexName = "superhero_name_idx", indexType = IndexType.FULLTEXT)
     private String name;
     private String pseudonym;
     private Publisher publisher;
     private List<Skill> skills;
 
-//    @RelatedTo(type = "ally", direction = Direction.BOTH)
-//    @Fetch
+    @RelatedTo(type = "ally", direction = Direction.BOTH)
+    @Fetch
     private List<Superhero> allies;
     private LocalDateTime firstAppearance;
 
