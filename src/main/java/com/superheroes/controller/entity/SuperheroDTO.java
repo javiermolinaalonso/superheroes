@@ -3,14 +3,14 @@ package com.superheroes.controller.entity;
 public class SuperheroDTO {
 
     private String name;
-    private String pseudonim;
+    private String pseudonym;
 
     public SuperheroDTO() {
     }
 
-    public SuperheroDTO(String name, String pseudonim) {
+    public SuperheroDTO(String name, String pseudonym) {
         this.name = name;
-        this.pseudonim = pseudonim;
+        this.pseudonym = pseudonym;
     }
 
     public String getName() {
@@ -23,11 +23,11 @@ public class SuperheroDTO {
     }
 
     public String getPseudonym() {
-        return pseudonim;
+        return pseudonym;
     }
 
-    public SuperheroDTO setPseudonim(String pseudonim) {
-        this.pseudonim = pseudonim;
+    public SuperheroDTO setPseudonym(String pseudonym) {
+        this.pseudonym = pseudonym;
         return this;
     }
 }

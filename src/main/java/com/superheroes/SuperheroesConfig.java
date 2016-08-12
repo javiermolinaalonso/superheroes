@@ -1,4 +1,4 @@
-package com.superheroes.config;
+package com.superheroes;
 
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
@@ -14,7 +14,7 @@ public class SuperheroesConfig extends Neo4jConfiguration {
     public static final String SUPERHEROES_DB = "superheroes.db";
 
     public SuperheroesConfig() {
-        setBasePackage("com.superheroes.repository");
+        setBasePackage("com.superheroes");
     }
 
     @Bean

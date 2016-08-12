@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController(value = "/superheroes")
 public class SuperheroesController {
 
@@ -24,8 +27,13 @@ public class SuperheroesController {
     }
 
     @RequestMapping
-    public SuperheroDTO getSuperHeroes() {
-        return new SuperheroDTO("Batman", "The dark knight");
+    public List<SuperheroDTO> getSuperHeroes() {
+        Iterable<Superhero> superheroes = superheroesService.getAll();
+        List<SuperheroDTO> superheroDTOs = new ArrayList<>();
+        for (Superhero superheroe : superheroes) {
+            superheroDTOs.add(superheroConverter.toDTO(superheroe));
+        }
+        return superheroDTOs;
     }
 
     @RequestMapping(method = RequestMethod.POST)
