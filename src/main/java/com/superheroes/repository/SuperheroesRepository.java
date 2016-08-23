@@ -5,6 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface SuperheroesRepository extends CrudRepository<Superhero, Long>{
 
-    Superhero findByName(Superhero superhero);
+    Superhero findByName(String name);
 
 }

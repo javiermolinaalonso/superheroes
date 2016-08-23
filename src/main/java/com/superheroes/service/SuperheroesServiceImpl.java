@@ -31,7 +31,7 @@ public class SuperheroesServiceImpl implements SuperheroesService {
 
     @Override
     public Superhero getByName(String name) {
-        return null;
+        return superheroesRepository.findByName(name);
     }
 
     @Override

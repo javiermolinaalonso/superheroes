@@ -6,10 +6,15 @@ import com.superheroes.entity.Superhero;
 import com.superheroes.service.SuperheroesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.stream.Collectors.joining;
 
 @RestController(value = "/superheroes")
 public class SuperheroesController {
@@ -35,9 +40,16 @@ public class SuperheroesController {
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public void createSuperhero(@RequestBody SuperheroDTO superheroDTO) {
-        Superhero superhero = superheroConverter.fromDTO(superheroDTO);
-        superheroesService.create(superhero);
+    public ResponseEntity<String> createSuperhero(@RequestBody @Valid SuperheroDTO superheroDTO, BindingResult validationResult) {
+        ResponseEntity<String> response;
+        if(validationResult.hasErrors()) {
+            String errors = validationResult.getFieldErrors().stream().map(fieldError -> fieldError.getField() + ":" + fieldError.getDefaultMessage()).collect(joining(","));
+            response = new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        } else {
+            Superhero superhero = superheroConverter.fromDTO(superheroDTO);
+            superheroesService.create(superhero);
+            response = new ResponseEntity<>(HttpStatus.CREATED);
+        }
+        return response;
     }
 }
