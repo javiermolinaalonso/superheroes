@@ -13,13 +13,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.joining;
 
-@RestController(value = "/superheroes")
+@RestController
+@RequestMapping(value = "/superheroes")
 public class SuperheroesController {
 
     private final SuperheroesService superheroesService;
@@ -29,6 +29,13 @@ public class SuperheroesController {
     public SuperheroesController(SuperheroesService superheroesService, SuperheroDTOConverter superheroConverter) {
         this.superheroesService = superheroesService;
         this.superheroConverter = superheroConverter;
+    }
+
+    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
+    public SuperheroDTO getSuperHero(@PathVariable String name) {
+        Superhero superhero = superheroesService.getByName(name);
+        return superheroConverter.toDTO(superhero);
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -45,7 +52,7 @@ public class SuperheroesController {
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<String> createSuperhero(@RequestBody @Valid SuperheroDTO superheroDTO, BindingResult validationResult) {
         ResponseEntity<String> response;
-        if(validationResult.hasErrors()) {
+        if (validationResult.hasErrors()) {
             String errors = validationResult.getFieldErrors().stream().map(fieldError -> fieldError.getField() + ":" + fieldError.getDefaultMessage()).collect(joining(","));
             response = new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         } else {
