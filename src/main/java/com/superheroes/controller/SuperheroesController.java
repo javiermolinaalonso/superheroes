@@ -2,6 +2,7 @@ package com.superheroes.controller;
 
 import com.superheroes.controller.converter.SuperheroDTOConverter;
 import com.superheroes.controller.entity.SuperheroDTO;
+import com.superheroes.controller.exception.InvalidPublisherException;
 import com.superheroes.entity.Superhero;
 import com.superheroes.service.SuperheroesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,5 +53,15 @@ public class SuperheroesController {
             response = new ResponseEntity<>(HttpStatus.CREATED);
         }
         return response;
+    }
+
+    @ExceptionHandler(value = InvalidPublisherException.class)
+    public ResponseEntity<String> handleIllegalArgument() {
+        return new ResponseEntity<>("Invalid publisher value", HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = DateTimeParseException.class)
+    public ResponseEntity<String> handleIllegalDate() {
+        return new ResponseEntity<>("Invalid date format", HttpStatus.BAD_REQUEST);
     }
 }

@@ -5,14 +5,15 @@ import java.util.List;
 
 public class SuperheroDTO {
 
-    @NotNull
+    @NotNull(message = "Cannot be null")
     private String name;
 
-    @NotNull
+    @NotNull(message = "Cannot be null")
     private String pseudonym;
 
-    @NotNull(message = "Publisher cannot be null")
+    @NotNull(message = "Cannot be null")
     private String publisher;
+
     private List<String> skills;
     private List<SuperheroDTO> allies;
     private String firstAppearance;
