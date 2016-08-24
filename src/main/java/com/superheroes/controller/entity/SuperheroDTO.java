@@ -21,7 +21,7 @@ public class SuperheroDTO {
     public SuperheroDTO() {
     }
 
-    public SuperheroDTO(String name, String pseudonym) {
+    public SuperheroDTO(String name, String pseudonym, String publisher) {
         this.name = name;
         this.pseudonym = pseudonym;
     }

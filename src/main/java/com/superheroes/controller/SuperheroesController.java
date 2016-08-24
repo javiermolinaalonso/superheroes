@@ -2,6 +2,7 @@ package com.superheroes.controller;
 
 import com.superheroes.controller.converter.SuperheroDTOConverter;
 import com.superheroes.controller.entity.SuperheroDTO;
+import com.superheroes.controller.exception.InvalidDateException;
 import com.superheroes.controller.exception.InvalidPublisherException;
 import com.superheroes.entity.Superhero;
 import com.superheroes.service.SuperheroesService;
@@ -12,7 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.format.DateTimeParseException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +36,8 @@ public class SuperheroesController {
     public List<SuperheroDTO> getSuperHeroes() {
         Iterable<Superhero> superheroes = superheroesService.getAll();
         List<SuperheroDTO> superheroDTOs = new ArrayList<>();
-        for (Superhero superheroe : superheroes) {
-            superheroDTOs.add(superheroConverter.toDTO(superheroe));
+        for (Superhero superhero : superheroes) {
+            superheroDTOs.add(superheroConverter.toDTO(superhero));
         }
         return superheroDTOs;
     }
@@ -60,7 +61,7 @@ public class SuperheroesController {
         return new ResponseEntity<>("Invalid publisher value", HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(value = DateTimeParseException.class)
+    @ExceptionHandler(value = InvalidDateException.class)
     public ResponseEntity<String> handleIllegalDate() {
         return new ResponseEntity<>("Invalid date format", HttpStatus.BAD_REQUEST);
     }

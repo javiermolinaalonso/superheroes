@@ -5,7 +5,7 @@ import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.*;
 import org.springframework.data.neo4j.support.index.IndexType;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -24,7 +24,7 @@ public class Superhero {
     @RelatedTo(type = "ally", direction = Direction.BOTH)
     @Fetch
     private Set<Superhero> allies;
-    private LocalDate firstAppearance;
+    private Date firstAppearance;
 
     public Superhero() {
     }
@@ -78,11 +78,11 @@ public class Superhero {
         this.allies = allies;
     }
 
-    public LocalDate getFirstAppearance() {
+    public Date getFirstAppearance() {
         return firstAppearance;
     }
 
-    public void setFirstAppearance(LocalDate firstAppearance) {
+    public void setFirstAppearance(Date firstAppearance) {
         this.firstAppearance = firstAppearance;
     }
 }
