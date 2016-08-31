@@ -2,6 +2,7 @@ package com.superheroes.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.superheroes.SuperheroesApplication;
+import com.superheroes.controller.entity.SuperheroDTO;
 import com.superheroes.entity.Publisher;
 import com.superheroes.entity.Superhero;
 import com.superheroes.repository.SuperheroesRepository;
@@ -95,6 +96,24 @@ public class SuperheroesIntegrationTest {
         ResponseEntity<String> response = template.getForEntity("http://localhost:8080/superheroes/batmanx", String.class);
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    public void testCreateNewSuperheroExpectCreated() throws Exception {
+        SuperheroDTO ironman = new SuperheroDTO();
+        ironman.setName("Ironman");
+        ironman.setPseudonym("Ironman");
+        ironman.setPublisher("MARVEL");
+        ironman.setSkills(asList("Genius", "Playboy", "Philantropist"));
+
+        ResponseEntity<String> response = template.postForEntity("http://localhost:8080/superheroes", ironman, String.class);
+
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+
+        ResponseEntity<String> ironmanResponse = template.getForEntity("http://localhost:8080/superheroes/ironman", String.class);
+        SuperheroDTO ironmanDto = new ObjectMapper().readValue(ironmanResponse.getBody(), SuperheroDTO.class);
+
+        assertEquals(ironmanDto, ironman);
     }
 
     private void validateBatman(HashMap<String, Object> batman) {
