@@ -7,6 +7,8 @@ import org.neo4j.graphdb.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class SuperheroesServiceImpl implements SuperheroesService {
 
@@ -30,8 +32,8 @@ public class SuperheroesServiceImpl implements SuperheroesService {
     }
 
     @Override
-    public Superhero getByName(String name) {
-        return superheroesRepository.findByName(name);
+    public Optional<Superhero> getByName(String name) {
+        return Optional.ofNullable(superheroesRepository.findByName(name));
     }
 
     @Override

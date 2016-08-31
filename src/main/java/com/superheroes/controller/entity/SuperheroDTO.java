@@ -24,6 +24,7 @@ public class SuperheroDTO {
     public SuperheroDTO(String name, String pseudonym, String publisher) {
         this.name = name;
         this.pseudonym = pseudonym;
+        this.publisher = publisher;
     }
 
     public String getName() {

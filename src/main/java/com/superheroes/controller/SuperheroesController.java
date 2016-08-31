@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.joining;
 
@@ -33,9 +34,15 @@ public class SuperheroesController {
 
     @RequestMapping(value = "/{name}", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
-    public SuperheroDTO getSuperHero(@PathVariable String name) {
-        Superhero superhero = superheroesService.getByName(name);
-        return superheroConverter.toDTO(superhero);
+    public ResponseEntity<SuperheroDTO> getSuperHero(@PathVariable String name) {
+        Optional<Superhero> superhero = superheroesService.getByName(name);
+        ResponseEntity<SuperheroDTO> entity;
+        if(superhero.isPresent()) {
+            entity = new ResponseEntity<>(superheroConverter.toDTO(superhero.get()), HttpStatus.OK);
+        } else {
+            entity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return entity;
     }
 
     @RequestMapping(method = RequestMethod.GET)
