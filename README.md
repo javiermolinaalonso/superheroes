@@ -1,5 +1,5 @@
 How to run it
-
+mvn package && java -jar target/superheroes-1.0-SNAPSHOT.jar
 
 Missing things
 - When creating a new SuperHero the api should return the URI of the created superhero
